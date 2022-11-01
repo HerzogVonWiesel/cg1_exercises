@@ -1,0 +1,13 @@
+[
+    {
+        "name": "Übung 1",
+        "id": "1",
+        "exercises": [
+            "grayscale",
+            "cpuGpu",
+            "metaballs"
+        ],
+        "archive": "1667313984567.tgz",
+        "importTime": 1667313984567
+    }
+]

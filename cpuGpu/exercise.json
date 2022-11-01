@@ -1,0 +1,6 @@
+{
+    "name": "CPU vs. GPU",
+    "description": "Implementieren Sie Bildfaltungsoperationen sowohl CPU- als auch GPU-seitig.",
+    "page": "index.pug",
+    "entry": "code/index.ts"
+}

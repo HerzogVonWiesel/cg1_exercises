@@ -1,0 +1,6 @@
+{
+    "name": "Graustufen",
+    "description": "Vergleichen Sie unterschiedliche Verfahren zur Konvertierung eines Farbbildes in Graustufen.",
+    "page": "index.pug",
+    "entry": "code/index.ts"
+}

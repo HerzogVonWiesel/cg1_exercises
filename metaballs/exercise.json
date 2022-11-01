@@ -1,0 +1,6 @@
+{
+    "name": "Metabälle",
+    "description": "Implementieren Sie eine Metaball-Visualisierung.",
+    "page": "index.pug",
+    "entry": "code/index.ts"
+}

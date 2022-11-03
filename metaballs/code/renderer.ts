@@ -10,10 +10,12 @@ import {
 
 export class MetaballRenderer extends Renderer {
     protected static modes = [
-        'Weiße Metaballs',
+        'Weiße Metaballs',
+
         // implement this to get 2 bonus points
-        'Psychedelisch'
+        'Psychedelisch',
         // you can add more visualizations :)
+        'Zebra'
     ];
 
     protected static numberOfMetaballs = 10;

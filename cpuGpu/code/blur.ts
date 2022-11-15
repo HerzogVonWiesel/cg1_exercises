@@ -5,14 +5,14 @@ type args = { blurRadius: number };
  * Loops over all pixels and uses the radius stored in this._blurRadius to
  * average all pixels in a square box to calculate the output values.
  */
-function get_rgb(image: Uint8Array, u: number, v: number, width: number){
+function get_rgb(image: Uint8Array, u: number, v: number, width: number): number[]{
     const r = image[u*3 + v*width*3 + 0];
     const g = image[u*3 + v*width*3 + 1];
     const b = image[u*3 + v*width*3 + 2];
     return [r, g, b];
 }
 
-function set_rgb(image: Uint8Array, u:number, v: number, width: number, rgb: number[]){
+function set_rgb(image: Uint8Array, u: number, v: number, width: number, rgb: number[]): void{
     image[u*3 + v*width*3 + 0] = rgb[0];
     image[u*3 + v*width*3 + 1] = rgb[1];
     image[u*3 + v*width*3 + 2] = rgb[2];

@@ -1,0 +1,7 @@
+#controls button {
+    width: 20ch;
+}
+
+#controls :nth-child(n+3):nth-child(-n+5) button {
+    width: 25ch;
+}

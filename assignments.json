@@ -9,5 +9,16 @@
         ],
         "archive": "1667313984567.tgz",
         "importTime": 1667313984567
+    },
+    {
+        "name": "Übung 2",
+        "id": "2",
+        "exercises": [
+            "colorLut",
+            "rasterization",
+            "rasterizePerformance"
+        ],
+        "archive": "1668522170249.tgz",
+        "importTime": 1668522170249
     }
 ]

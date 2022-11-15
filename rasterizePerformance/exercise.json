@@ -1,0 +1,6 @@
+{
+    "name": "Rasterisierungs-Performance",
+    "description": "Generieren Sie eine Menge an Vertices für einen optimalen triangle fan zur Rasterisierung eines Kreises.",
+    "page": "index.pug",
+    "entry": "code/index.ts"
+}

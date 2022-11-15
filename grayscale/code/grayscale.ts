@@ -14,7 +14,9 @@ export function averageGray(input: Jimp): Jimp {
         for (let v=0; v < input.getHeight(); v++){
             const pixelcolor = Jimp.intToRGBA(input.getPixelColor(u, v));
             const brightness = (pixelcolor.r + pixelcolor.g + pixelcolor.b)/3;
-            output.setPixelColor(Jimp.rgbaToInt(brightness, brightness, brightness, pixelcolor.a), u, v);
+            output.setPixelColor(
+                Jimp.rgbaToInt(brightness, brightness, brightness, pixelcolor.a),
+                u, v);
         }
     }
 
@@ -78,7 +80,8 @@ function floydSteinberg(input: Jimp): Jimp {
             if (u != input.getWidth()-1)
                 push_delta(greyscale_img, delta, 7/16, u+1, v);
             if (v != input.getHeight()-1){
-                push_delta(greyscale_img, delta, 3/16, u-1, v+1);
+                if (u != 0)
+                    push_delta(greyscale_img, delta, 3/16, u-1, v+1);
                 push_delta(greyscale_img, delta, 5/16, u, v+1);
                 push_delta(greyscale_img, delta, 1/16, u+1, v+1);
             }

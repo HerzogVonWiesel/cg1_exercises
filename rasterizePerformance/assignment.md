@@ -1,0 +1,10 @@
+*Erreichbare Punktzahl:* **4 Punkte**
+
+Der Bauer Triangulus hat ein Schaf zum Grasen auf der Wiese angebunden. Um sicherzustellen, dass niemand vorbeikommt und sein Schaf schert, stellt der Bauer einen Zaun auf. Da der Zaun den Mähdrescher blockiert, sollte er möglichst nah am maximalen Bewegungsradius des Schafes stehen, um so wenig Gras wie möglich unnütz einzuzäunen. Allerdings hat der Bauer auch keine Lust, viele Pfähle einzubuddeln. Er will nun ohne großen Aufwand einschätzen können, wie viel Gras bei welcher Anzahl von Pfählen verloren geht. Dies soll mit einer einfachen Visualisierung erfolgen.
+Außerdem will er wissen, was die optimale Eckzahl ist, um möglichst viel Zeit zu sparen und trotzdem möglichst viel Gras zu Heu machen zu können.
+
+Generieren Sie in der Funktion `build` in vscode-link(./code/triangleFanGeometry.ts) 2D-Koordinaten zum Rendern eines gleichseitiges Vielecks. Die Koordinaten werden als [triangle fan](https://www.khronos.org/opengl/wiki/Primitive#Triangle_primitives) gerendert, d.h. jeder zusätzliche Punkt spannt ein Dreieck mit dem vorheringen und dem allerersten Punkt auf.
+
+Die Werte sollen als x/y-Paare in ein Float32Array gespeichert werden. Der Wertebereich geht pro Achse von -1 bis 1; das Zentrum des Polygons liegt bei (0, 0). Beachten Sie auch den gegebenen Radius: Das Polygon soll so groß skaliert werden, dass ein Kreis mit diesem Radius exakt in das Polygon passt.
+
+Benchmark: Der Übungsrahmen bietet die Möglichkeit, eine Vielzahl an unterschiedlichen Eckpunktanzahlen in unterschiedlichen Auflösungen zu rasterisieren. Dieser Benchmark testet, wie stark sich die Anzahl der Vertices und die Anzahl an unnötig verarbeiteten Fragmenten auf die Rechenzeit für einen Frame auswirken. Die Parameter dafür sind in vscode-link(./code/performanceRenderer.ts) spezifiziert. Die Ergebnisse werden für zwei unterschiedliche Auflösungen auf der rechten Seite des Canvas als Graphen angezeigt, sowie auf der Konsole in Textform ausgegeben.

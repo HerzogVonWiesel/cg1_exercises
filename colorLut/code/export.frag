@@ -11,17 +11,11 @@ in vec2 v_uv;
 void main(void)
 {
     // TODO: generate a NxNxN color LUT, stored as N*N by N pixel 2D image
-    fragColor = vec4(v_uv.x, v_uv.y, 0.0, 1.0);
-
-    // REMOVE BEGIN
-    // 1p correct position (0.5p per r and b, g is too simple)
-    // 1p correct value (div by res-1 to get true black and white)
-    float rPos = fract(v_uv.x * u_resolution);
-    float bPos = floor(v_uv.x * u_resolution) / u_resolution;
-
-    vec3 pos = vec3(rPos, v_uv.y, bPos);
-    vec3 color = floor(pos * u_resolution) / (u_resolution - 1.0);
-
+    vec3 color = vec3(v_uv, 0.0);
+    color.x = fract(color.x*u_resolution);
+    color.x = floor(color.x * u_resolution)/(u_resolution-1.0);
+    color.y = floor(color.y * u_resolution)/(u_resolution-1.0);
+    color.z = floor(v_uv.x * u_resolution)/(u_resolution-1.0);
     fragColor = vec4(color, 1.0);
-    // REMOVE END
+
 }

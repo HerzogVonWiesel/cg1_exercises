@@ -14,46 +14,38 @@ layout(location = 0) out vec4 fragColor;
 // texture coordinate of current fragment
 in vec2 v_uv;
 
-// REMOVE BEGIN
-ivec2 i3_i2(ivec3 p)
-{
-    return ivec2(p.x + p.z * int(u_resolution), p.y);
+ivec2 i_flatten(ivec3 vector, float resolution){
+    ivec2 result = ivec2(vector.x+int(resolution)*vector.z, vector.y);
+    return result;
 }
-// REMOVE END
 
 void main(void)
 {
     // TODO: use the LUT to apply effects to the input texture
     // hint: use texelFetch to get a texture value without interpolation
     // this will require an integer vector (ivec2)
-    fragColor = texture(u_image, v_uv);
-    // REMOVE BEGIN
-    // 0.5p fetch orig image
-    // 1p coord calc
-    // 2.5p 8x texelFetch + trilinear filtering
     vec3 inColor = texture(u_image, v_uv).rgb;
 
-    float steps = u_resolution - 1.0;
-    vec3 f3Pos = steps * inColor;
-    ivec3 lowerPos = ivec3(f3Pos);
-    vec3 mixFactors = f3Pos - floor(f3Pos); // or fract(f3Pos)
+    vec3 mixFactor = fract(inColor*(u_resolution-1.0));
+    ivec3 basePos = ivec3(inColor*(u_resolution-1.0));
+    vec4 col_000 = texelFetch(u_lut, i_flatten(basePos + ivec3(0,0,0), u_resolution), 0);
+    vec4 col_001 = texelFetch(u_lut, i_flatten(basePos + ivec3(0,0,1), u_resolution), 0);
+    vec4 col_010 = texelFetch(u_lut, i_flatten(basePos + ivec3(0,1,0), u_resolution), 0);
+    vec4 col_011 = texelFetch(u_lut, i_flatten(basePos + ivec3(0,1,1), u_resolution), 0);
+    vec4 col_100 = texelFetch(u_lut, i_flatten(basePos + ivec3(1,0,0), u_resolution), 0);
+    vec4 col_101 = texelFetch(u_lut, i_flatten(basePos + ivec3(1,0,1), u_resolution), 0);
+    vec4 col_110 = texelFetch(u_lut, i_flatten(basePos + ivec3(1,1,0), u_resolution), 0);
+    vec4 col_111 = texelFetch(u_lut, i_flatten(basePos + ivec3(1,1,1), u_resolution), 0);
 
-    vec3 c000 = texelFetch(u_lut, i3_i2(lowerPos + ivec3(0, 0, 0)), 0).rgb;
-    vec3 c001 = texelFetch(u_lut, i3_i2(lowerPos + ivec3(0, 0, 1)), 0).rgb;
-    vec3 c010 = texelFetch(u_lut, i3_i2(lowerPos + ivec3(0, 1, 0)), 0).rgb;
-    vec3 c011 = texelFetch(u_lut, i3_i2(lowerPos + ivec3(0, 1, 1)), 0).rgb;
-    vec3 c100 = texelFetch(u_lut, i3_i2(lowerPos + ivec3(1, 0, 0)), 0).rgb;
-    vec3 c101 = texelFetch(u_lut, i3_i2(lowerPos + ivec3(1, 0, 1)), 0).rgb;
-    vec3 c110 = texelFetch(u_lut, i3_i2(lowerPos + ivec3(1, 1, 0)), 0).rgb;
-    vec3 c111 = texelFetch(u_lut, i3_i2(lowerPos + ivec3(1, 1, 1)), 0).rgb;
-    vec3 c00 = mix(c000, c001, mixFactors.b);
-    vec3 c01 = mix(c010, c011, mixFactors.b);
-    vec3 c10 = mix(c100, c101, mixFactors.b);
-    vec3 c11 = mix(c110, c111, mixFactors.b);
-    vec3 c0 = mix(c00, c01, mixFactors.g);
-    vec3 c1 = mix(c10, c11, mixFactors.g);
-    vec3 c = mix(c0, c1, mixFactors.r);
+    vec4 col_x00 = mix(col_000, col_100, mixFactor.x);
+    vec4 col_x10 = mix(col_010, col_110, mixFactor.x);
+    vec4 col_x01 = mix(col_001, col_101, mixFactor.x);
+    vec4 col_x11 = mix(col_011, col_111, mixFactor.x);
 
-    fragColor = vec4(c, 1.0);
-    // REMOVE END
+    vec4 col_xx0 = mix(col_x00, col_x10, mixFactor.y);
+    vec4 col_xx1 = mix(col_x01, col_x11, mixFactor.y);
+
+    vec4 col_xxx = mix(col_xx0, col_xx1, mixFactor.z);
+    fragColor = col_xxx;
+
 }

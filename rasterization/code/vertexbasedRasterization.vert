@@ -5,15 +5,12 @@ precision lowp float;
 in vec2 a_vertex;
 in vec3 a_color;
 
-// REMOVE BEGIN
-out vec3 v_color;
-// REMOVE END
+out vec3 v_Position;
+
 
 void main(void)
 {
-    // REMOVE BEGIN
-    // 1p: out var decl and assignment
-    v_color = a_color;
-    // REMOVE END
+
     gl_Position = vec4(a_vertex, 0.0, 1.0);
+    v_Position = a_color.xyz;
 }

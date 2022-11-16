@@ -13,40 +13,27 @@ uniform vec2 u_vertices[3];
 // vertex colors
 uniform vec3 u_colors[3];
 
-// REMOVE BEGIN
-// edge function
-float edge(vec2 p, vec2 v0, vec2 v1) {
-    return (p.x-v0.x)*(v1.y-v0.y)-(p.y-v0.y)*(v1.x-v0.x);
+float edge_func(vec2 v0, vec2 v1, vec2 point){
+    float epsilon = (point.x-v0.x)*(v1.y-v0.y)-(point.y-v0.y)*(v1.x-v0.x);
+    return epsilon;
 }
-// REMOVE END
+
+float tri_area(vec2 v0, vec2 v1, vec2 v2){
+    v1 = v1-v0;
+    v2 = v2-v0;
+    return length(cross(vec3(v1, 0.0), vec3(v2, 0.0)));
+}
 
 void main(void)
 {
+    fragColor = vec4(0.0, 0.0, 0.0, 1.0);
     // TODO: return the correct color
-    fragColor = vec4(1.0, 0.0, 1.0, 1.0);
-    // REMOVE BEGIN
-    // 1.5p edge function implementation
-    // 1.5p: 0.5p per correct in/out check
-    // 2p: total area and barycentric coordinates
-    // 1p: color mixing
+    if(edge_func(u_vertices[0], u_vertices[1], v_uv) > 0.0 && edge_func(u_vertices[1], u_vertices[2], v_uv) > 0.0 && edge_func(u_vertices[2], u_vertices[0], v_uv) > 0.0){
+        float total_area = tri_area(u_vertices[0], u_vertices[1], u_vertices[2]);
+        float alpha = tri_area(u_vertices[1], u_vertices[2], v_uv)/total_area;
+        float beta  = tri_area(u_vertices[2], u_vertices[0], v_uv)/total_area;
+        float gamma = tri_area(u_vertices[0], u_vertices[1], v_uv)/total_area;
+        fragColor = vec4(alpha * u_colors[0] + beta * u_colors[1] + gamma * u_colors[2], 1.0);
+    }
 
-    // edge functions
-    float e = edge(u_vertices[0], u_vertices[1], u_vertices[2]);
-    float e0 = edge(v_uv, u_vertices[1], u_vertices[2]);
-    float e1 = edge(v_uv, u_vertices[2], u_vertices[0]);
-    float e2 = edge(v_uv, u_vertices[0], u_vertices[1]);
-
-    // barycentric coordinates
-    float w0 = e0/e;
-    float w1 = e1/e;
-    float w2 = e2/e;
-
-    // triangle mask
-    float triangle = step(0.0, e0) * step(0.0, e1) * step(0.0, e2);
-
-    vec3 color = w0 * u_colors[0] + w1 * u_colors[1] + w2 * u_colors[2];
-    color *= triangle;
-
-    fragColor = vec4(color, 1.0);
-    // REMOVE END
 }

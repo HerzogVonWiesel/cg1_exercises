@@ -1,0 +1,62 @@
+{
+    "Kombiniert": {
+        "start": {
+            "roll": 2.89,
+            "pitch": -0.66,
+            "yaw": -2.45
+        },
+        "end": {
+            "roll": -0.75,
+            "pitch": 0.38,
+            "yaw": 0.69
+        }
+    },
+    "Gieren": {
+        "start": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": -1
+        },
+        "end": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 1
+        }
+    },
+    "Nicken": {
+        "start": {
+            "roll": 0,
+            "pitch": -1,
+            "yaw": 0
+        },
+        "end": {
+            "roll": 0,
+            "pitch": 1,
+            "yaw": 0
+        }
+    },
+    "Rollen": {
+        "start": {
+            "roll": -1,
+            "pitch": 0,
+            "yaw": 0
+        },
+        "end": {
+            "roll": 1,
+            "pitch": 0,
+            "yaw": 0
+        }
+    },
+    "Benutzerdefiniert": {
+        "start": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0
+        },
+        "end": {
+            "roll": 0,
+            "pitch": 0,
+            "yaw": 0
+        }
+    }
+}

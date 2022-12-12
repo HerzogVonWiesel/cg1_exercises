@@ -1,0 +1,6 @@
+{
+    "name": "Matrix-Transformationen",
+    "description": "Geben Sie die Transformationsmatrizen für die gegebenen Objekte an.",
+    "entry": "code/index.ts",
+    "page": "./index.pug"
+}

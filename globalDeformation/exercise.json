@@ -1,0 +1,6 @@
+{
+    "name": "Globale Deformationen",
+    "description": "Implementieren Sie die vier globalen Deformationen im Vertex-Shader.",
+    "page": "index.pug",
+    "entry": "code/index.ts"
+}

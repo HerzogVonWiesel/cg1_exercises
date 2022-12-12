@@ -1,0 +1,6 @@
+{
+    "name": "Rotation",
+    "description": "Implementieren Sie Rotation mit unterschiedlichen Interpolationsverfahren.",
+    "page": "index.pug",
+    "entry": "code/index.ts"
+}

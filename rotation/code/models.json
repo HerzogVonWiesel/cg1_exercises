@@ -1,0 +1,14 @@
+{
+    "Koordinaten": {
+        "scale": 0.25
+    },
+    "Hubschrauber": {
+        "scale": 0.45
+    },
+    "Heißluftballon": {
+        "scale": 1.3
+    },
+    "Lachendes Gesicht": {
+        "scale": 1
+    }
+}

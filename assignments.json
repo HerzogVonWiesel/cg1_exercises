@@ -20,5 +20,16 @@
         ],
         "archive": "1668592323082.tgz",
         "importTime": 1668592323082
+    },
+    {
+        "name": "Übung 3",
+        "id": "3",
+        "exercises": [
+            "transformationMatrix",
+            "globalDeformation",
+            "rotation"
+        ],
+        "archive": "1670854161338.tgz",
+        "importTime": 1670854161338
     }
 ]

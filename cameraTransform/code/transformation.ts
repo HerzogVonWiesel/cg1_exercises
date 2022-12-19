@@ -5,6 +5,16 @@ import {
 } from 'webgl-operate';
 import { vertFovToHorFov } from './vertFovToHorFov';
 
+// Convert from degrees to radians.
+function degTorad (degrees: number): number {
+	return degrees * Math.PI / 180;
+}
+
+// Convert from radians to degrees.
+function radTodeg (radians: number): number {
+	return radians * 180 / Math.PI;
+}
+
 // TODO: Implement all these functions.
 
 /**
@@ -27,23 +37,18 @@ export function getLookAt(camera: Camera): mat4 {
     vec3.normalize(u, u);
     const v = vec3.create();
 
-    vec3.scale(v, F, vec3.dot(F, U)); //x
-    vec3.sub(v, U, v); //x
-    vec3.normalize(v, v); //x
+    // vec3.scale(v, F, vec3.dot(F, U)); //x
+    // vec3.sub(v, U, v); //x
+    // vec3.normalize(v, v); //x
 
-    vec3.cross(u, v, n); //x
+    // vec3.cross(u, v, n); //x
 
-    //vec3.cross(v, u, n); //y
-    const matRotate = mat4.fromValues(  u[0], u[1], u[2], 0,
-                                        v[0], v[1], v[2], 0,
-                                        n[0], n[1], n[2], 0,
+    vec3.cross(v, n, u); //y
+    const matRotate = mat4.fromValues(  u[0], v[0], n[0], 0,
+                                        u[1], v[1], n[1], 0,
+                                        u[2], v[2], n[2], 0,
                                         0, 0, 0, 1);
 
-    console.log("Fuvn:");
-    console.log(F);
-    console.log(u);
-    console.log(v);
-    console.log(n);
     mat4.mul(transforMatrix, matRotate, transforMatrix);
 
     return transforMatrix;
@@ -54,7 +59,18 @@ export function getLookAt(camera: Camera): mat4 {
  */
 export function getAngleAdjustment(camera: Camera): mat4 {
 
-    return mat4.create();
+    const fovy = degTorad(camera.fovy);
+    const fovx = vertFovToHorFov(fovy, camera.aspect);
+
+    const cotx = 1/Math.tan(fovx/2);
+    const coty = 1/Math.tan(fovy/2);
+
+    const matScale = mat4.fromValues(   cotx, 0, 0, 0,
+                                        0, coty, 0, 0,
+                                        0, 0, 1, 0,
+                                        0, 0, 0, 1);
+
+    return matScale;
 }
 
 /**
@@ -62,7 +78,14 @@ export function getAngleAdjustment(camera: Camera): mat4 {
  */
 export function getScaling(camera: Camera): mat4 {
 
-    return mat4.create();
+    const normalized_far = 1/camera.far;
+
+    const matScale = mat4.fromValues(   normalized_far, 0, 0, 0,
+                                        0, normalized_far, 0, 0,
+                                        0, 0, normalized_far, 0,
+                                        0, 0, 0, 1);
+
+    return matScale;
 }
 
 /**
@@ -70,5 +93,12 @@ export function getScaling(camera: Camera): mat4 {
  */
 export function getPerspectiveTransform(camera: Camera): mat4 {
 
-    return mat4.create();
+    const k = camera.near/camera.far;
+
+    const matShear = mat4.fromValues(   1, 0, 0, 0,
+                                        0, 1, 0, 0,
+                                        0, 0, 1/(k-1), -1,
+                                        0, 0, k/(k-1), 0);
+
+    return matShear;
 }

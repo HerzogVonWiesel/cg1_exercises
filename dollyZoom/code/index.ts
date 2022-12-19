@@ -102,3 +102,31 @@ ui.input.numberRange({
     handler: (v) => renderer.maxDist = v,
     triggerHandlerOnMove: true
 });
+
+ui.input.numberRange({
+    label: 'Breitengrad',
+    value: 0, min: -180, max: 180, step: 0.5,
+    handler: (v) => renderer.latitude = v,
+    triggerHandlerOnMove: true
+});
+
+ui.input.numberRange({
+    label: 'Längengrad',
+    value: 0, min: -180, max: 180, step: 0.5,
+    handler: (v) => renderer.longitude = v,
+    triggerHandlerOnMove: true
+});
+
+ui.input.numberRange({
+    label: 'Breitengrad (Ende)',
+    value: 0, min: -180, max: 180, step: 0.5,
+    handler: (v) => renderer.endlatitude = v,
+    triggerHandlerOnMove: true
+});
+
+ui.input.numberRange({
+    label: 'Längengrad (Ende)',
+    value: 0, min: -180, max: 180, step: 0.5,
+    handler: (v) => renderer.endlongitude = v,
+    triggerHandlerOnMove: true
+});

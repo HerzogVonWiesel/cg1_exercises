@@ -20,9 +20,15 @@ import { smoothstep } from './smoothstep';
  * @param focalWidth Size of the object in focus.
  * @param camera The camera object to manipulate.
  */
+
+function degTorad (degrees: number): number {
+	return degrees * Math.PI / 180;
+}
+
 export function updateCamera(
     viewTarget: vec3,
     rotation: Rotation,
+    endrotation: Rotation,
     minDist: number,
     maxDist: number,
     interpolateFactor: number,
@@ -58,11 +64,32 @@ export function updateCamera(
 
     // TODO: set correct camera properties
     // center - the point the camera looks at
-    camera.center = vec3.fromValues(0, 0, 0);
+    camera.center = viewTarget;
     // eye - the camera's position
-    camera.eye = vec3.fromValues(0, 0, 1);
+    const camPos = vec3.create();
+    const distance = lerp(minDist, maxDist, smooth);
+    const zPos = vec3.fromValues(0, 0, 1);
+    vec3.rotateX(zPos, zPos, vec3.fromValues(0, 0, 0), degTorad(rotation.latitude));
+    vec3.rotateY(zPos, zPos, vec3.fromValues(0, 0, 0), degTorad(rotation.longitude));
+    const endzPos = vec3.fromValues(0, 0, 1);
+    vec3.rotateX(endzPos, endzPos, vec3.fromValues(0, 0, 0), degTorad(endrotation.latitude));
+    vec3.rotateY(endzPos, endzPos, vec3.fromValues(0, 0, 0), degTorad(endrotation.longitude));
+    vec3.lerp(zPos, zPos, endzPos, smooth);
+    vec3.normalize(zPos, zPos);
+    vec3.scale(zPos, zPos, distance);
+    vec3.add(camPos, viewTarget, zPos);
+    camera.eye = camPos;
     // up - y axis of the camera
-    camera.up = vec3.fromValues(0, 1, 0);
+    const lookAt = vec3.create();
+    vec3.sub(lookAt, camera.center, camera.eye);
+    vec3.normalize(lookAt, lookAt);
+    const right = vec3.create();
+    vec3.cross(right, lookAt, vec3.fromValues(0, 1, 0));
+    const up = vec3.create();
+    vec3.cross(up, right, lookAt);
+    camera.up = up;
     // fovy - the camera's vertical field of view
-    camera.fovy = 45;
+    const fovy = getFov(distance, focalWidth);
+    camera.fovy = fovy;
+
 }

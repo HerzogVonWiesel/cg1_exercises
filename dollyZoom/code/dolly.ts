@@ -37,6 +37,7 @@ export class DollyZoomRenderer extends Renderer {
 
     protected _viewTarget = vec3.create();
     protected _rotation = { longitude: 0, latitude: 0 } as Rotation;
+    protected _endrotation = { longitude: 0, latitude: 0 } as Rotation;
     protected _eventHandler: EventHandler;
     protected _startPoint: vec2;
     protected _navSensitivity: number;
@@ -162,6 +163,7 @@ export class DollyZoomRenderer extends Renderer {
             updateCamera(
                 this._viewTarget,
                 this._rotation,
+                this._endrotation,
                 this._minDist,
                 this._maxDist,
                 this._interpolateFactor,
@@ -231,6 +233,26 @@ export class DollyZoomRenderer extends Renderer {
 
     public set maxDist(value: number) {
         this._maxDist = value;
+        this.invalidateCam();
+    }
+
+    public set latitude(value: number) {
+        this._rotation.latitude = value;
+        this.invalidateCam();
+    }
+
+    public set longitude(value: number) {
+        this._rotation.longitude = value;
+        this.invalidateCam();
+    }
+
+    public set endlatitude(value: number) {
+        this._endrotation.latitude = value;
+        this.invalidateCam();
+    }
+
+    public set endlongitude(value: number) {
+        this._endrotation.longitude = value;
         this.invalidateCam();
     }
 }

@@ -73,7 +73,11 @@ vec3 getNormal()
 
 // Bonus TODO: Implement clipping check
 bool shouldBeClipped(vec4 pos)
-{
+{
+    pos.xyz = pos.xyz/pos.w;
+    if(pos.x < -1.0 || pos.x > 1.0 || pos.y < -1.0 || pos.y > 1.0 || pos.z < -1.0 || pos.z > 1.0){
+        return true;
+    }
     return false;
 }
 

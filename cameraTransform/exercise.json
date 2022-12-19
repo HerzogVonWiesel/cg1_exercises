@@ -1,0 +1,6 @@
+{
+    "name": "Kameratransformationen",
+    "description": "Implementieren Sie die Kameratransformationen, um das View Frustum in den Einheitswürfel zu verformen.",
+    "page": "index.pug",
+    "entry": "code/index.ts"
+}

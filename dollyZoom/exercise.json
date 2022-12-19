@@ -1,0 +1,6 @@
+{
+    "name": "Dolly Zoom",
+    "description": "Implementieren sie eine Kamerasteuerung, die den Dolly-Zoom-Effekt umsetzt.",
+    "page": "index.pug",
+    "entry": "code/index.ts"
+}

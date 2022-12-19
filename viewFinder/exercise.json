@@ -1,0 +1,6 @@
+{
+    "name": "View Finder",
+    "description": "Implementieren Sie die Platzierung der Rechtecke.",
+    "page": "index.pug",
+    "entry": "code/index.ts"
+}

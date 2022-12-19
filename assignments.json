@@ -31,5 +31,16 @@
         ],
         "archive": "1670854161338.tgz",
         "importTime": 1670854161338
+    },
+    {
+        "name": "Übung 4",
+        "id": "4",
+        "exercises": [
+            "cameraTransform",
+            "dollyZoom",
+            "viewFinder"
+        ],
+        "archive": "1671009037219.tgz",
+        "importTime": 1671009037219
     }
 ]

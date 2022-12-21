@@ -16,7 +16,8 @@ in vec2 a_vertex;
 out vec2 v_uv;
 
 // noise function returning a pseudo random number based on an seed
-float rand(int seed){return fract(sin(float(seed)) * 43758.5453123);}
+float rand(int seed){return fract(sin(float(seed)) * 43758.5453123);}
+
 
 vec4 getPosition(
     int id,
@@ -24,8 +25,19 @@ vec4 getPosition(
     vec2 resolution
 ) {
     // TODO: calculate the vertexPosition3d and also set v_uv correctly
-    vec4 vertexPosition3d = vec4(a_vertex, 0.0, 1.0);
-    v_uv = a_vertex * 0.5 + 0.5;
+    vec2 offset = vec2(mod(float(id), float(u_geometryResolution)), float(id/u_geometryResolution));
+    offset = 2.0*offset - float(u_geometryResolution-1);
+    vec2 og_vertex_pos = a_vertex + offset;
+    og_vertex_pos /= float(u_geometryResolution);
+    offset /= float(u_geometryResolution);
+    v_uv = og_vertex_pos * 0.5 + 0.5;
+
+    float z_dist = distanceToCorrectViewPosition;
+    z_dist = sqrt(z_dist*z_dist - length(offset)*length(offset));
+    og_vertex_pos *= z_dist/u_correctViewPosition.z;
+
+
+    vec4 vertexPosition3d = vec4(og_vertex_pos, u_correctViewPosition.z-z_dist, 1.0);
     return vertexPosition3d;
 }
 

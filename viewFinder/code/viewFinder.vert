@@ -25,15 +25,18 @@ vec4 getPosition(
     vec2 resolution
 ) {
     // TODO: calculate the vertexPosition3d and also set v_uv correctly
-    vec2 offset = vec2(mod(float(id), float(u_geometryResolution)), float(id/u_geometryResolution));
+    vec2 offset = vec2(float(id % u_geometryResolution), float(id/u_geometryResolution));
     offset = 2.0*offset - float(u_geometryResolution-1);
-    vec2 og_vertex_pos = a_vertex + offset;
+    float aspect_ratio = resolution.x/resolution.y;
+    offset.x *= aspect_ratio;
+    vec2 og_vertex_pos = vec2(a_vertex.x*aspect_ratio + offset.x, a_vertex.y + offset.y);
     og_vertex_pos /= float(u_geometryResolution);
     offset /= float(u_geometryResolution);
-    v_uv = og_vertex_pos * 0.5 + 0.5;
+    v_uv.x = og_vertex_pos.x/aspect_ratio * 0.5 + 0.5;
+    v_uv.y = og_vertex_pos.y * 0.5 + 0.5;
 
     float z_dist = distanceToCorrectViewPosition;
-    z_dist = sqrt(z_dist*z_dist - length(offset)*length(offset));
+    z_dist = sqrt(abs(z_dist*z_dist - length(offset)*length(offset)));
     og_vertex_pos *= z_dist/u_correctViewPosition.z;
 
 
